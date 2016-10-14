@@ -181,6 +181,7 @@ def menu(exits):
     prompted, repeatedly, until a correct choice is entered."""
 
     # Repeat until the player enter a valid choice
+    valid = False
     while valid == False:
         
         print_menu(exits)
