@@ -21,7 +21,7 @@ def remove_punct(text):
     for ch in text:
         if ch.isalnum() == True:
             newtext = newtext + ch
-        elif ch:
+        elif ch == " ":
             newtext = newtext + ch
 
     return newtext
@@ -43,7 +43,33 @@ def remove_spaces(text):
     >>> remove_spaces("   ")
     ''
     """
-    pass
+    text_reached = False
+    no_front_space = ""
+    newtext = ""
+    revtext = ""
+    for ch in text:
+        if text_reached == False:
+            if ch.isspace() == False:
+                no_front_space = no_front_space + ch
+                text_reached = True
+        else:
+            no_front_space = no_front_space + ch
+
+    text_reached = False
+    for ch in reversed(no_front_space):
+        if text_reached == False:
+            if ch.isspace() == False:
+                revtext = revtext + ch
+                text_reached = True
+        else:
+            revtext = revtext + ch
+
+    for ch in reversed(revtext):
+        newtext = newtext + ch
+
+    return newtext
+
+    
 
 
 def normalise_input(user_input):
@@ -58,7 +84,9 @@ def normalise_input(user_input):
     >>> normalise_input("HELP!!!!!!!")
     'help'
     """
-    pass
+    newtext = remove_spaces(remove_punct(user_input))
+    newtext = newtext.lower()
+    return newtext
 
     
 def display_room(room):
@@ -82,11 +110,10 @@ def display_room(room):
     Note: <BLANKLINE> here means that doctest should expect a blank line.
     """
     print("""
-    """ + room["name"].upper() + """
+""" + room["name"].upper() + """
 
-    """ + room["description"] + """
-
-    """)
+""" + room["description"] + """
+""")
     
 def exit_leads_to(exits, direction):
 
@@ -181,7 +208,6 @@ def menu(exits):
     prompted, repeatedly, until a correct choice is entered."""
 
     # Repeat until the player enter a valid choice
-    valid = False
     while valid == False:
         
         print_menu(exits)
